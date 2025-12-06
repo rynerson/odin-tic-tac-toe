@@ -11,6 +11,15 @@ function Player (name, XorO){
     return {name, XorO};
 
 }
+function DisplayGame(GameBoard){
+    for(let i = 0; i <GameBoard.board.length;i++){
+        let button = document.getElementById('btn' + i);
+        if(button){
+            button.textContent = GameBoard.board[i];
+        }
+
+    }
+}
 function trackTurns(board){
     if(board.playerTurn){
         board.playerTurn = false;
@@ -28,6 +37,7 @@ function flow(){
     let enemySelect = 0;
     let userSelect = 0;
     while(GameBoard.gameEnd != true){
+        
         enemySelect = Math.floor(Math.random()*9);
         
         trackTurns(GameBoard);
@@ -38,6 +48,7 @@ function flow(){
             }
             GameBoard.board[userSelect] = user.XorO;
             console.log(userSelect);
+            DisplayGame(GameBoard);
             if(CheckWinState(user,GameBoard)){
                 GameBoard.gameEnd = true;
                 console.log("Player wins");
@@ -53,6 +64,7 @@ function flow(){
                 enemySelect = Math.floor(Math.random()*9);
             }
             GameBoard.board[enemySelect] = enemy.XorO;
+            DisplayGame(GameBoard);
             console.log(enemySelect);
             if(CheckWinState(enemy,GameBoard)){
                 console.log("Computer wins");
