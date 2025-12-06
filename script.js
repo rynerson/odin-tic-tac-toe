@@ -1,55 +1,47 @@
-//gamboard constructor
-function GameBoard(){
-    if (!new.target) {
-        throw Error("You must use the 'new' operator to call the constructor");
-    }
-    this.board = ["","","","","","","","",""];
-    this.gameEnd = false;
-    this.playerTurn = true;
-
-}
-//player constructor
-function Player(name,XorO){
-    if (!new.target) {
-        throw Error("You must use the 'new' operator to call the constructor");
-    }
-    this.name = name;
-    this.XorO = XorO;
+const GameBoard = (function(){
+    const board = ["","","","","","","","",""];
+    let gameEnd = false;
+    let playerTurn = true;
     
+    return {board, gameEnd, playerTurn};
+
+})();
+//factory function for creating the player
+function Player (name, XorO){
+    return {name, XorO};
+
 }
 function trackTurns(board){
-    if(board.playerTurn == true){
+    if(board.playerTurn){
         board.playerTurn = false;
         console.log("Computer's turn");
-
-    }
-    else{
+    } else {
         board.playerTurn = true;
         console.log("Player's Turn");
     }
-
 }
 function flow(){
-    gameEnd = false;
-    const user = new Player("Linda","X");
-    const enemy = new Player("Computer","O");
-    const board = new GameBoard();
+    GameBoard.gameEnd = false;
+    const user = Player("Linda","X");
+    const enemy = Player("Computer","O");
+    
     let enemySelect = 0;
     let userSelect = 0;
-    while(board.gameEnd != true){
+    while(GameBoard.gameEnd != true){
         enemySelect = Math.floor(Math.random()*9);
         
-        trackTurns(board);
-        if(board.playerTurn == true){
+        trackTurns(GameBoard);
+        if(GameBoard.playerTurn == true){
             userSelect = Math.floor(Math.random()*9);
-            while(board.board[userSelect] != ""){
+            while(GameBoard.board[userSelect] != ""){
                 userSelect = Math.floor(Math.random()*9);
             }
-            board.board[userSelect] = user.XorO;
+            GameBoard.board[userSelect] = user.XorO;
             console.log(userSelect);
-            if(CheckWinState(user,board)){
-                board.gameEnd = true;
+            if(CheckWinState(user,GameBoard)){
+                GameBoard.gameEnd = true;
                 console.log("Player wins");
+                break;
             }
             
             
@@ -57,14 +49,15 @@ function flow(){
         }
         else{
             enemySelect = Math.floor(Math.random()*9);
-            while(board.board[enemySelect] !=""){
+            while(GameBoard.board[enemySelect] !=""){
                 enemySelect = Math.floor(Math.random()*9);
             }
-            board.board[enemySelect] = enemy.XorO;
+            GameBoard.board[enemySelect] = enemy.XorO;
             console.log(enemySelect);
-            if(CheckWinState(enemy,board)){
+            if(CheckWinState(enemy,GameBoard)){
                 console.log("Computer wins");
-                board.gameEnd = true;
+                GameBoard.gameEnd = true;
+                break;
 
             }
 
@@ -72,9 +65,10 @@ function flow(){
         
         
     }
-    if(isArrayFull(board.board)){
-            board.gameEnd = true;
+    if(isArrayFull(GameBoard.board)){
+            GameBoard.gameEnd = true;
             console.log("Nobody wins");
+            break;
     }
     
 
