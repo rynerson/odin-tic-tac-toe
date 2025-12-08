@@ -20,6 +20,57 @@ function DisplayGame(GameBoard){
 
     }
 }
+function MarkSpot(board, user, enemy){
+     for(let i = 0; i < 9; i++){
+        document.getElementById('btn' + i).onclick = function(){
+        // ignore clicks if game ended or spot filled
+            if(board.gameEnd || board.board[i] !== "") return;
+            //user turn
+            if(board.playerTurn){
+                board.board[i] = user.XorO;
+                DisplayGame(board);
+                if(CheckWinState(user,board)){
+                    console.log("Player Wins");
+                    board.gameEnd = true;
+                    return;
+                }
+                if(isArrayFull(board.board)){
+                    console.log("Nobody wins");
+                    board.gameEnd = true;
+                    return;
+                }
+                board.playerTurn = false;
+                enemyTurn(board, enemy);
+            }
+            
+        }
+    }
+    
+}
+function enemyTurn(board, enemy){
+    let spot = Math.floor(Math.random()*9);
+    while(board.board[spot] !== ""){
+        spot = Math.floor(Math.random()*9);
+    }
+
+    board.board[spot] = enemy.XorO;
+    DisplayGame(board);
+    console.log("Computer chose", spot);
+
+    if(CheckWinState(enemy,board)){
+        console.log("Computer Wins");
+        board.gameEnd = true;
+        return;
+    }
+
+    if(isArrayFull(board.board)){
+        console.log("Nobody wins");
+        board.gameEnd = true;
+        return;
+    }
+
+    board.playerTurn = true; // give control back to user
+}
 function trackTurns(board){
     if(board.playerTurn){
         board.playerTurn = false;
@@ -33,60 +84,9 @@ function flow(){
     GameBoard.gameEnd = false;
     const user = Player("Linda","X");
     const enemy = Player("Computer","O");
+    DisplayGame(GameBoard);
+    MarkSpot(GameBoard,user,enemy);
     
-    let enemySelect = 0;
-    let userSelect = 0;
-    while(GameBoard.gameEnd != true){
-        
-        enemySelect = Math.floor(Math.random()*9);
-        
-        trackTurns(GameBoard);
-        if(GameBoard.playerTurn == true){
-            userSelect = Math.floor(Math.random()*9);
-            while(GameBoard.board[userSelect] != ""){
-                userSelect = Math.floor(Math.random()*9);
-            }
-            GameBoard.board[userSelect] = user.XorO;
-            console.log(userSelect);
-            DisplayGame(GameBoard);
-            if(CheckWinState(user,GameBoard)){
-                GameBoard.gameEnd = true;
-                console.log("Player wins");
-                break;
-            }
-            
-            
-            
-        }
-        else{
-            enemySelect = Math.floor(Math.random()*9);
-            while(GameBoard.board[enemySelect] !=""){
-                enemySelect = Math.floor(Math.random()*9);
-            }
-            GameBoard.board[enemySelect] = enemy.XorO;
-            DisplayGame(GameBoard);
-            console.log(enemySelect);
-            if(CheckWinState(enemy,GameBoard)){
-                console.log("Computer wins");
-                GameBoard.gameEnd = true;
-                break;
-
-            }
-
-            
-        
-        
-    }
-    if(isArrayFull(GameBoard.board)){
-            GameBoard.gameEnd = true;
-            console.log("Nobody wins");
-            break;
-    }
-    
-
-
-
-    }
 
 
 
