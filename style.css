@@ -5,7 +5,7 @@ body{
     align-items:center;
     height:100vh;
 }
-div{
+.board{
     background-color: white;
     display:grid;
     grid-template-columns: repeat(3, 1fr);
@@ -19,4 +19,21 @@ button{
     display:flex;
     justify-content:center;
     align-items:center;
+}
+.form{
+    background-color:rgb(176, 230, 176);
+    margin-right:20px;
+    padding:20px;
+}
+.submit{
+    all:unset;
+    background-color:green;
+    color:white;
+    border-radius:10px;
+    padding:10px;
+
+
+}
+#results{
+    background-color:green;
 }

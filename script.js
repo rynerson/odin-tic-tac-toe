@@ -22,6 +22,7 @@ function DisplayGame(GameBoard){
 }
 function MarkSpot(board, user, enemy){
      for(let i = 0; i < 9; i++){
+        
         document.getElementById('btn' + i).onclick = function(){
         // ignore clicks if game ended or spot filled
             if(board.gameEnd || board.board[i] !== "") return;
@@ -30,7 +31,7 @@ function MarkSpot(board, user, enemy){
                 board.board[i] = user.XorO;
                 DisplayGame(board);
                 if(CheckWinState(user,board)){
-                    console.log("Player Wins");
+                    console.log(user.name + " Wins");
                     board.gameEnd = true;
                     return;
                 }
@@ -71,21 +72,23 @@ function enemyTurn(board, enemy){
 
     board.playerTurn = true; // give control back to user
 }
-function trackTurns(board){
-    if(board.playerTurn){
-        board.playerTurn = false;
-        console.log("Computer's turn");
-    } else {
-        board.playerTurn = true;
-        console.log("Player's Turn");
-    }
-}
+
 function flow(){
+    
     GameBoard.gameEnd = false;
-    const user = Player("Linda","X");
+    const form = document.querySelector('form');
+    //get the name for the user
+    form.addEventListener('submit', function (event) {
+    // Prevent the default form submission behavior (which refreshes the page)
+    event.preventDefault();
+    const name = document.getElementById('name').value;
+    const user = Player(name,"X");
     const enemy = Player("Computer","O");
     DisplayGame(GameBoard);
     MarkSpot(GameBoard,user,enemy);
+    
+    
+    });
     
 
 
