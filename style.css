@@ -1,9 +1,27 @@
+@font-face {
+    font-family: 'Indie Flower';
+    src: url('fonts/IndieFlower.woff2') format('woff2'),
+        url('fonts/IndieFlower.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mountains of Christmas';
+    src: url('fonts/MountainsofChristmas-Regular.woff2') format('woff2'),
+        url('fonts/MountainsofChristmas-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 body{
     background-color:rgb(0, 0, 0);
     display:flex;
     justify-content: center;
     align-items:center;
     height:100vh;
+    font-family:"Indie Flower";
 }
 .board{
     background-color: white;
@@ -12,6 +30,7 @@ body{
     grid-template-rows:repeat(3,1fr);
     width:300px;
     height:300px;
+    font-family:"Mountains of Christmas";
 }
 button{
     all:unset;
@@ -24,6 +43,10 @@ button{
     background-color:rgb(176, 230, 176);
     margin-right:20px;
     padding:20px;
+    border-radius: 15px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
 }
 .submit{
     all:unset;
@@ -31,9 +54,14 @@ button{
     color:white;
     border-radius:10px;
     padding:10px;
+    max-width:100px;
+    text-align: center;
+    
 
 
 }
 #results{
-    background-color:green;
+    font-size: 20px;
+    text-align: center;
+    color:white;
 }
